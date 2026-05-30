@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeHub.Views.RecipeDetailPage"
+             Title="{Binding Recipe.Title}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+                <Image Source="{Binding Recipe.ImagePath}"
+                       HeightRequest="250"
+                       Aspect="AspectFill"/>
+
+                <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    <Label Grid.Row="0"
+                           Text="{Binding Recipe.Title}"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           LineBreakMode="WordWrap"/>
+
+                    <FlexLayout Grid.Row="1"
+                                Margin="0,10"
+                                Wrap="Wrap"
+                                JustifyContent="Start">
+                        <Frame Padding="8,4"
+                               BackgroundColor="#E8F5E9"
+                               CornerRadius="15"
+                               HasShadow="False"
+                               Margin="0,0,8,0">
+                            <Label Text="{Binding Recipe.Category}"
+                                   FontSize="12"
+                                   TextColor="#2E7D32"/>
+                        </Frame>
+                        <Frame Padding="8,4"
+                               BackgroundColor="#FFF3E0"
+                               CornerRadius="15"
+                               HasShadow="False"
+                               Margin="0,0,8,0">
+                            <Label Text="{Binding Recipe.Difficulty}"
+                                   FontSize="12"
+                                   TextColor="#E65100"/>
+                        </Frame>
+                        <Frame Padding="8,4"
+                               BackgroundColor="#E3F2FD"
+                               CornerRadius="15"
+                               HasShadow="False">
+                            <Label Text="{Binding Recipe.Calories, StringFormat='{0}卡'}"
+                                   FontSize="12"
+                                   TextColor="#1565C0"/>
+                        </Frame>
+                    </FlexLayout>
+
+                    <Grid Grid.Row="2" Margin="0,15,0,0" ColumnDefinitions="Auto,Auto,Auto,Auto">
+                        <Label Grid.Column="0"
+                               Text="⏱️"
+                               FontSize="16"/>
+                        <Label Grid.Column="1"
+                               Text="{Binding Recipe.PrepTime, StringFormat='准备 {0}分钟'}"
+                               FontSize="14"
+                               TextColor="Gray"
+                               Margin="4,0"/>
+
+                        <Label Grid.Column="2"
+                               Text="🔥"
+                               FontSize="16"
+                               Margin="12,0,0,0"/>
+                        <Label Grid.Column="3"
+                               Text="{Binding Recipe.CookTime, StringFormat='烹饪 {0}分钟'}"
+                               FontSize="14"
+                               TextColor="Gray"
+                               Margin="4,0"/>
+                    </Grid>
+
+                    <Label Grid.Row="3"
+                           Text="👤 份量"
+                           FontSize="14"
+                           Margin="0,10,0,0"/>
+
+                    <Label Grid.Row="4"
+                           Text="{Binding Recipe.Servings, StringFormat='{0}人'}"
+                           FontSize="16"
+                           Margin="0,0,0,15"/>
+
+                    <Label Grid.Row="5"
+                           Text="{Binding Recipe.Description}"
+                           FontSize="14"
+                           TextColor="Gray"
+                           LineBreakMode="WordWrap"
+                           Margin="0,0,0,15"/>
+
+                    <BoxView Grid.Row="6" Color="LightGray" HeightRequest="1" Margin="0,10"/>
+
+                    <Label Grid.Row="7"
+                           Text="🛒 食材"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="0,10,0,10"/>
+
+                    <CollectionView Grid.Row="8"
+                                    ItemsSource="{Binding Recipe.Ingredients}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10,5" ColumnDefinitions="Auto,*">
+                                    <Label Grid.Column="0"
+                                           Text="•"
+                                           FontSize="16"
+                                           TextColor="#512BD4"/>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding}"
+                                           FontSize="14"
+                                           LineBreakMode="WordWrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <BoxView Grid.Row="9" Color="LightGray" HeightRequest="1" Margin="0,10"/>
+                </Grid>
+
+                <Grid Padding="20" RowDefinitions="Auto,Auto">
+                    <Label Grid.Row="0"
+                           Text="📝 制作步骤"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,10"/>
+
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding Recipe.Instructions}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10,5" ColumnDefinitions="Auto,*">
+                                    <Frame Grid.Column="0"
+                                           Padding="8,4"
+                                           BackgroundColor="#512BD4"
+                                           CornerRadius="12"
+                                           HasShadow="False"
+                                           WidthRequest="30"
+                                           HeightRequest="30"
+                                           VerticalOptions="Start"
+                                           HorizontalOptions="Center">
+                                        <Label Text="{Binding ., Converter={StaticResource IndexConverter}}"
+                                               FontSize="12"
+                                               TextColor="White"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding}"
+                                           FontSize="14"
+                                           LineBreakMode="WordWrap"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+
+                 <Button Text="📷 拍照更新"
+                         Margin="20,10"
+                         BackgroundColor="#512BD4"
+                         TextColor="White"
+                         CornerRadius="25"
+                         Clicked="OnTakePhotoClicked"/>
+
+                 <Grid Margin="20,0,20,0" ColumnDefinitions="*,*">
+                     <Button Grid.Column="0"
+                             Text="✏️ 编辑"
+                             BackgroundColor="#FF9800"
+                             TextColor="White"
+                             CornerRadius="20"
+                             Margin="0,0,5,0"
+                             Clicked="OnEditClicked"/>
+                     <Button Grid.Column="1"
+                             Text="🗑️ 删除"
+                             BackgroundColor="#F44336"
+                             TextColor="White"
+                             CornerRadius="20"
+                             Margin="5,0,0,0"
+                             Clicked="OnDeleteClicked"/>
+                 </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="0" Padding="10" ColumnDefinitions="Auto,*,Auto">
+            <ImageButton Grid.Column="0"
+                         Source="back"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Clicked="OnBackClicked"/>
+
+            <Frame Grid.Column="2"
+                   Padding="8"
+                   BackgroundColor="White"
+                   CornerRadius="20"
+                   HasShadow="True">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFavoriteTapped"/>
+                </Frame.GestureRecognizers>
+                <Label Text="{Binding Recipe.IsFavorite, Converter={StaticResource BoolToFavoriteConverter}}"
+                       FontSize="20"
+                       HorizontalOptions="Center"/>
+            </Frame>
+        </Grid>
+
+        <Frame Grid.Row="2"
+               Padding="10"
+               BackgroundColor="#512BD4"
+               CornerRadius="30"
+               Margin="20"
+               HorizontalOptions="Center"
+               HasShadow="True">
+            <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="10">
+                <ImageButton Grid.Column="0"
+                             Source="volume_up"
+                             HeightRequest="50"
+                             WidthRequest="50"
+                             Clicked="OnSpeakClicked"
+                             IsVisible="{Binding IsSpeaking, Converter={StaticResource InverseBoolConverter}}"/>
+
+                <ImageButton Grid.Column="0"
+                             Source="volume_off"
+                             HeightRequest="50"
+                             WidthRequest="50"
+                             Clicked="OnStopSpeakingClicked"
+                             IsVisible="{Binding IsSpeaking}"/>
+
+                <Label Grid.Column="1"
+                       Text="{Binding IsSpeaking, Converter={StaticResource BoolToSpeakTextConverter}}"
+                       FontSize="16"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       FontAttributes="Bold"/>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>
