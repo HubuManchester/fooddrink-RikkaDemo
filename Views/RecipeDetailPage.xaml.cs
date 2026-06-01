@@ -53,7 +53,7 @@ public partial class RecipeDetailPage : ContentPage
 
     private async void OnDeleteClicked(object? sender, EventArgs e)
     {
-        var result = await DisplayAlert("确认删除", "确定要删除这个食谱吗？", "删除", "取消");
+        var result = await DisplayAlert("Confirm Delete", "Are you sure you want to delete this recipe?", "Delete", "Cancel");
         if (result)
         {
             await _viewModel.DeleteRecipeAsync();

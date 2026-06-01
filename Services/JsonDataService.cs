@@ -1,3 +1,4 @@
+using Microsoft.Maui;
 using RecipeHub.Models;
 
 namespace RecipeHub.Services;
@@ -14,11 +15,63 @@ public class JsonDataService : IDataService
 
     private void InitializeData()
     {
+        var needsReset = false;
+
         if (!File.Exists(_dataFilePath))
         {
             var defaultRecipes = GetDefaultRecipes();
             SaveRecipes(defaultRecipes);
         }
+        else
+        {
+            // Check if data contains Chinese characters and needs reset
+            var existingRecipes = LoadRecipes();
+            foreach (var recipe in existingRecipes)
+            {
+                if (IsChineseText(recipe.Title) || IsChineseText(recipe.Description))
+                {
+                    needsReset = true;
+                    break;
+                }
+                foreach (var ingredient in recipe.Ingredients)
+                {
+                    if (IsChineseText(ingredient))
+                    {
+                        needsReset = true;
+                        break;
+                    }
+                }
+                if (needsReset) break;
+                foreach (var instruction in recipe.Instructions)
+                {
+                    if (IsChineseText(instruction))
+                    {
+                        needsReset = true;
+                        break;
+                    }
+                }
+                if (needsReset) break;
+            }
+
+            if (needsReset)
+            {
+                File.Delete(_dataFilePath);
+                var defaultRecipes = GetDefaultRecipes();
+                SaveRecipes(defaultRecipes);
+            }
+        }
+    }
+
+    private bool IsChineseText(string text)
+    {
+        foreach (char c in text)
+        {
+            if (c >= 0x4e00 && c <= 0x9fff)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<Recipe> GetDefaultRecipes()
@@ -28,96 +81,96 @@ public class JsonDataService : IDataService
             new Recipe
             {
                 Id = 1,
-                Title = "经典番茄炒蛋",
-                Description = "简单易学的家常菜，色香味俱全",
+                Title = "Classic Tomato Scrambled Eggs",
+                Description = "Simple and delicious home-style dish",
                 ImagePath = "food_1.png",
-                Ingredients = new List<string> { "鸡蛋 4个", "番茄 2个", "盐 适量", "糖 1勺", "葱花 适量", "食用油 适量" },
-                Instructions = new List<string> { "将番茄洗净切块，鸡蛋打散备用", "热锅倒油，倒入蛋液炒成块盛起", "锅中再倒少许油，放入番茄炒出汁水", "加入炒好的鸡蛋，调入盐和糖", "翻炒均匀，撒上葱花即可出锅" },
+                Ingredients = new List<string> { "Eggs 4", "Tomatoes 2", "Salt to taste", "Sugar 1 tbsp", "Green onions to taste", "Cooking oil to taste" },
+                Instructions = new List<string> { "Wash and chop tomatoes, beat eggs", "Heat oil, add eggs and cook until set", "Add more oil, stir-fry tomatoes until juicy", "Add cooked eggs, season with salt and sugar", "Stir well, garnish with green onions and serve" },
                 PrepTime = 10,
                 CookTime = 15,
-                Category = "晚餐",
+                Category = "Dinner",
                 Servings = 2,
-                Difficulty = "简单",
+                Difficulty = "Easy",
                 Calories = 250,
                 IsFavorite = false
             },
             new Recipe
             {
                 Id = 2,
-                Title = "香煎三文鱼",
-                Description = "富含Omega-3的健康美味",
+                Title = "Pan-Seared Salmon",
+                Description = "Healthy and delicious, rich in Omega-3",
                 ImagePath = "food_2.png",
-                Ingredients = new List<string> { "三文鱼 200g", "柠檬 半个", "盐 适量", "黑胡椒 适量", "橄榄油 1勺", "迷迭香 1支" },
-                Instructions = new List<string> { "三文鱼用厨房纸吸干水分", "两面撒盐和黑胡椒腌制10分钟", "平底锅加热，倒入橄榄油", "放入三文鱼，中小火每面煎3分钟", "最后挤上柠檬汁，放上迷迭香装饰" },
+                Ingredients = new List<string> { "Salmon 200g", "Lemon half", "Salt to taste", "Black pepper to taste", "Olive oil 1 tbsp", "Rosemary 1 sprig" },
+                Instructions = new List<string> { "Pat salmon dry with paper towels", "Season with salt and pepper, marinate 10 minutes", "Heat pan, add olive oil", "Pan-sear salmon 3 minutes per side over medium heat", "Squeeze lemon juice, garnish with rosemary" },
                 PrepTime = 15,
                 CookTime = 6,
-                Category = "晚餐",
+                Category = "Dinner",
                 Servings = 1,
-                Difficulty = "中等",
+                Difficulty = "Medium",
                 Calories = 350,
                 IsFavorite = false
             },
             new Recipe
             {
                 Id = 3,
-                Title = "香蕉燕麦粥",
-                Description = "营养丰富的健康早餐",
+                Title = "Banana Oatmeal",
+                Description = "Nutritious and healthy breakfast",
                 ImagePath = "food_3.png",
-                Ingredients = new List<string> { "燕麦片 50g", "牛奶 250ml", "香蕉 1根", "蜂蜜 1勺", "肉桂粉 适量" },
-                Instructions = new List<string> { "燕麦片用冷水泡10分钟", "将牛奶和燕麦片倒入小锅，小火煮5分钟", "香蕉切片", "将煮好的燕麦粥盛入碗中", "摆上香蕉片，淋上蜂蜜，撒上肉桂粉" },
+                Ingredients = new List<string> { "Oats 50g", "Milk 250ml", "Banana 1", "Honey 1 tbsp", "Cinnamon to taste" },
+                Instructions = new List<string> { "Soak oats in cold water for 10 minutes", "Combine oats and milk in pot, simmer 5 minutes", "Slice banana", "Transfer oatmeal to bowl", "Top with banana slices, drizzle honey, sprinkle cinnamon" },
                 PrepTime = 5,
                 CookTime = 5,
-                Category = "早餐",
+                Category = "Breakfast",
                 Servings = 1,
-                Difficulty = "简单",
+                Difficulty = "Easy",
                 Calories = 300,
                 IsFavorite = false
             },
             new Recipe
             {
                 Id = 4,
-                Title = "巧克力蛋糕",
-                Description = "浓郁香甜的甜点",
+                Title = "Chocolate Cake",
+                Description = "Rich and sweet dessert",
                 ImagePath = "food_4.png",
-                Ingredients = new List<string> { "低筋面粉 100g", "可可粉 30g", "鸡蛋 2个", "牛奶 50ml", "黄油 60g", "糖 80g", "泡打粉 3g" },
-                Instructions = new List<string> { "黄油室温软化，加入糖打发", "分次加入蛋液，搅拌均匀", "筛入面粉、可可粉和泡打粉", "加入牛奶，轻柔拌匀", "倒入模具，烤箱180度烤25分钟" },
+                Ingredients = new List<string> { "Cake flour 100g", "Cocoa powder 30g", "Eggs 2", "Milk 50ml", "Butter 60g", "Sugar 80g", "Baking powder 3g" },
+                Instructions = new List<string> { "Cream softened butter with sugar", "Add eggs one at a time, mix well", "Sift flour, cocoa powder, and baking powder", "Add milk, fold gently", "Pour into mold, bake at 180°C for 25 minutes" },
                 PrepTime = 20,
                 CookTime = 25,
-                Category = "甜点",
+                Category = "Dessert",
                 Servings = 6,
-                Difficulty = "中等",
+                Difficulty = "Medium",
                 Calories = 280,
                 IsFavorite = false
             },
             new Recipe
             {
                 Id = 5,
-                Title = "芒果冰沙",
-                Description = "清爽解暑的夏日饮品",
+                Title = "Mango Smoothie",
+                Description = "Refreshing summer drink",
                 ImagePath = "food_5.png",
-                Ingredients = new List<string> { "芒果 2个", "酸奶 150ml", "牛奶 100ml", "冰块 适量", "蜂蜜 1勺" },
-                Instructions = new List<string> { "芒果去皮去核，取果肉", "将芒果肉、酸奶、牛奶和蜂蜜放入搅拌机", "加入适量冰块", "搅打至顺滑", "倒入杯中即可享用" },
+                Ingredients = new List<string> { "Mangoes 2", "Yogurt 150ml", "Milk 100ml", "Ice cubes to taste", "Honey 1 tbsp" },
+                Instructions = new List<string> { "Peel and pit mangoes, get fruit flesh", "Add mango, yogurt, milk, and honey to blender", "Add ice cubes", "Blend until smooth", "Pour into glass and enjoy" },
                 PrepTime = 5,
                 CookTime = 0,
-                Category = "饮品",
+                Category = "Drink",
                 Servings = 1,
-                Difficulty = "简单",
+                Difficulty = "Easy",
                 Calories = 200,
                 IsFavorite = false
             },
             new Recipe
             {
                 Id = 6,
-                Title = "宫保鸡丁",
-                Description = "经典川菜，麻辣鲜香",
+                Title = "Kung Pao Chicken",
+                Description = "Classic Sichuan dish, spicy and fragrant",
                 ImagePath = "food_6.png",
-                Ingredients = new List<string> { "鸡胸肉 300g", "花生米 50g", "干辣椒 8个", "花椒 1勺", "葱 1根", "姜 2片", "蒜 3瓣", "生抽 2勺", "料酒 1勺", "糖 1勺" },
-                Instructions = new List<string> { "鸡胸肉切丁，用料酒、生抽腌制15分钟", "花生米炸至金黄盛起", "热锅冷油，下花椒和干辣椒爆香", "放入鸡丁炒至变色", "加入葱姜蒜和调味料翻炒", "最后加入花生米炒匀即可" },
+                Ingredients = new List<string> { "Chicken breast 300g", "Peanuts 50g", "Dried chilies 8", "Sichuan peppercorns 1 tbsp", "Green onion 1", "Ginger 2 slices", "Garlic 3 cloves", "Soy sauce 2 tbsp", "Cooking wine 1 tbsp", "Sugar 1 tbsp" },
+                Instructions = new List<string> { "Cut chicken into cubes, marinate with wine and soy sauce 15 minutes", "Fry peanuts until golden", "Heat oil, add peppercorns and chilies", "Add chicken, stir-fry until cooked", "Add aromatics and seasonings, stir-fry", "Add peanuts, mix well and serve" },
                 PrepTime = 20,
                 CookTime = 10,
-                Category = "午餐",
+                Category = "Lunch",
                 Servings = 2,
-                Difficulty = "中等",
+                Difficulty = "Medium",
                 Calories = 400,
                 IsFavorite = false
             }
@@ -151,11 +204,19 @@ public class JsonDataService : IDataService
 
     public async Task AddRecipeAsync(Recipe recipe)
     {
-        await Task.CompletedTask;
-        var recipes = LoadRecipes();
-        recipe.Id = recipes.Any() ? recipes.Max(r => r.Id) + 1 : 1;
-        recipes.Add(recipe);
-        SaveRecipes(recipes);
+        try
+        {
+            await Task.CompletedTask;
+            var recipes = LoadRecipes();
+            recipe.Id = recipes.Any() ? recipes.Max(r => r.Id) + 1 : 1;
+            recipes.Add(recipe);
+            SaveRecipes(recipes);
+        }
+        catch (Exception ex)
+        {
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to add recipe: {ex.Message}", "OK");
+            throw;
+        }
     }
 
     public async Task UpdateRecipeAsync(Recipe recipe)
@@ -172,13 +233,21 @@ public class JsonDataService : IDataService
 
     public async Task DeleteRecipeAsync(int id)
     {
-        await Task.CompletedTask;
-        var recipes = LoadRecipes();
-        var recipe = recipes.FirstOrDefault(r => r.Id == id);
-        if (recipe != null)
+        try
         {
-            recipes.Remove(recipe);
-            SaveRecipes(recipes);
+            await Task.CompletedTask;
+            var recipes = LoadRecipes();
+            var recipe = recipes.FirstOrDefault(r => r.Id == id);
+            if (recipe != null)
+            {
+                recipes.Remove(recipe);
+                SaveRecipes(recipes);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to delete recipe: {ex.Message}", "OK");
+            throw;
         }
     }
 }

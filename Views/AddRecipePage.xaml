@@ -2,100 +2,100 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RecipeHub.Views.AddRecipePage"
-             Title="添加食谱">
+              Title="Add Recipe">
     <Grid RowDefinitions="Auto,*">
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="0" Padding="16">
                 <Frame Padding="10" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="食谱图片" FontAttributes="Bold" FontSize="16"/>
+                         <Label Text="Recipe Image" FontAttributes="Bold" FontSize="16"/>
                         <Grid HeightRequest="200">
                             <Image Source="{Binding ImagePath}" Aspect="AspectFill"/>
-                            <Button Text="📷 拍照" 
-                                    VerticalOptions="End" 
-                                    HorizontalOptions="Center" 
-                                    Margin="0,10"
-                                    BackgroundColor="#512BD4"
-                                    TextColor="White"
-                                    CornerRadius="20"
-                                    Clicked="OnTakePhotoClicked"/>
+                             <Button Text="Take Photo"
+                                     VerticalOptions="End"
+                                     HorizontalOptions="Center"
+                                     Margin="0,10"
+                                     BackgroundColor="#512BD4"
+                                     TextColor="White"
+                                     CornerRadius="20"
+                                     Clicked="OnTakePhotoClicked"/>
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
                 <Frame Padding="10" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="食谱名称 *" FontAttributes="Bold" FontSize="16"/>
-                        <Entry Text="{Binding Title}" Placeholder="输入食谱名称"/>
+                         <Label Text="Recipe Name *" FontAttributes="Bold" FontSize="16"/>
+                         <Entry Text="{Binding Title}" Placeholder="Enter recipe name"/>
                         
-                        <Label Text="描述" FontAttributes="Bold" FontSize="16" Margin="0,10,0,0"/>
-                        <Editor Text="{Binding Description}" 
-                                Placeholder="描述这个食谱..." 
-                                HeightRequest="80" 
-                                AutoSize="TextChanges"/>
+                         <Label Text="Description" FontAttributes="Bold" FontSize="16" Margin="0,10,0,0"/>
+                         <Editor Text="{Binding Description}"
+                                 Placeholder="Describe this recipe..."
+                                 HeightRequest="80"
+                                 AutoSize="TextChanges"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <Frame Padding="10" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="分类" FontAttributes="Bold" FontSize="16"/>
-                        <Picker Title="选择分类" ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}"/>
+                         <Label Text="Category" FontAttributes="Bold" FontSize="16"/>
+                         <Picker Title="Select category" ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}"/>
                         
-                        <Label Text="难度" FontAttributes="Bold" FontSize="16" Margin="0,10,0,0"/>
-                        <Picker Title="选择难度" ItemsSource="{Binding Difficulties}" SelectedItem="{Binding Difficulty}"/>
+                         <Label Text="Difficulty" FontAttributes="Bold" FontSize="16" Margin="0,10,0,0"/>
+                         <Picker Title="Select difficulty" ItemsSource="{Binding Difficulties}" SelectedItem="{Binding Difficulty}"/>
                         
                         <Grid Margin="0,10,0,0" ColumnDefinitions="*,*">
-                            <VerticalStackLayout Grid.Column="0" Spacing="5">
-                                <Label Text="准备时间（分钟）" FontAttributes="Bold" FontSize="14"/>
-                                <Entry Text="{Binding PrepTime}" Keyboard="Numeric" Placeholder="10"/>
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0,0,0">
-                                <Label Text="烹饪时间（分钟）" FontAttributes="Bold" FontSize="14"/>
-                                <Entry Text="{Binding CookTime}" Keyboard="Numeric" Placeholder="10"/>
-                            </VerticalStackLayout>
+                             <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                 <Label Text="Prep Time (min)" FontAttributes="Bold" FontSize="14"/>
+                                 <Entry Text="{Binding PrepTime}" Keyboard="Numeric" Placeholder="10"/>
+                             </VerticalStackLayout>
+                             <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0,0,0">
+                                 <Label Text="Cook Time (min)" FontAttributes="Bold" FontSize="14"/>
+                                 <Entry Text="{Binding CookTime}" Keyboard="Numeric" Placeholder="10"/>
+                             </VerticalStackLayout>
                         </Grid>
                         
                         <Grid Margin="0,10,0,0" ColumnDefinitions="*,*">
-                            <VerticalStackLayout Grid.Column="0" Spacing="5">
-                                <Label Text="份量（人）" FontAttributes="Bold" FontSize="14"/>
-                                <Entry Text="{Binding Servings}" Keyboard="Numeric" Placeholder="1"/>
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0,0,0">
-                                <Label Text="热量（卡路里）" FontAttributes="Bold" FontSize="14"/>
-                                <Entry Text="{Binding Calories}" Keyboard="Numeric" Placeholder="200"/>
-                            </VerticalStackLayout>
+                             <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                 <Label Text="Servings" FontAttributes="Bold" FontSize="14"/>
+                                 <Entry Text="{Binding Servings}" Keyboard="Numeric" Placeholder="1"/>
+                             </VerticalStackLayout>
+                             <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="10,0,0,0">
+                                 <Label Text="Calories (kcal)" FontAttributes="Bold" FontSize="14"/>
+                                 <Entry Text="{Binding Calories}" Keyboard="Numeric" Placeholder="200"/>
+                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
                 <Frame Padding="10" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="食材 *" FontAttributes="Bold" FontSize="16"/>
-                        <Label Text="每行输入一种食材" FontSize="12" TextColor="Gray"/>
-                        <Editor Text="{Binding Ingredients}" 
-                                Placeholder="例如：&#10;鸡蛋 4个&#10;番茄 2个&#10;盐 适量" 
-                                HeightRequest="120" 
-                                AutoSize="TextChanges"/>
+                         <Label Text="Ingredients *" FontAttributes="Bold" FontSize="16"/>
+                         <Label Text="Enter one ingredient per line" FontSize="12" TextColor="Gray"/>
+                         <Editor Text="{Binding Ingredients}"
+                                 Placeholder="E.g.&#10;Eggs 4&#10;Tomatoes 2&#10;Salt to taste"
+                                 HeightRequest="120"
+                                 AutoSize="TextChanges"/>
                     </VerticalStackLayout>
                 </Frame>
 
                 <Frame Padding="10" Margin="0,0,0,16">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="制作步骤 *" FontAttributes="Bold" FontSize="16"/>
-                        <Label Text="每行输入一个步骤" FontSize="12" TextColor="Gray"/>
-                        <Editor Text="{Binding Instructions}" 
-                                Placeholder="例如：&#10;将番茄洗净切块&#10;鸡蛋打散备用&#10;热锅倒油，倒入蛋液炒成块" 
-                                HeightRequest="120" 
-                                AutoSize="TextChanges"/>
+                         <Label Text="Instructions *" FontAttributes="Bold" FontSize="16"/>
+                         <Label Text="Enter one step per line" FontSize="12" TextColor="Gray"/>
+                         <Editor Text="{Binding Instructions}"
+                                 Placeholder="E.g.&#10;Wash and chop tomatoes&#10;Beat eggs&#10;Heat oil, add eggs and cook"
+                                 HeightRequest="120"
+                                 AutoSize="TextChanges"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <Button Text="💾 保存食谱" 
-                        Margin="0,0,0,20"
-                        BackgroundColor="#512BD4" 
-                        TextColor="White" 
-                        CornerRadius="25"
-                        Clicked="OnSaveClicked"/>
+                 <Button Text="Save Recipe"
+                         Margin="0,0,0,20"
+                         BackgroundColor="#512BD4"
+                         TextColor="White"
+                         CornerRadius="25"
+                         Clicked="OnSaveClicked"/>
             </VerticalStackLayout>
         </ScrollView>
 

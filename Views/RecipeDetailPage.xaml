@@ -43,9 +43,9 @@
                                BackgroundColor="#E3F2FD"
                                CornerRadius="15"
                                HasShadow="False">
-                            <Label Text="{Binding Recipe.Calories, StringFormat='{0}卡'}"
-                                   FontSize="12"
-                                   TextColor="#1565C0"/>
+                             <Label Text="{Binding Recipe.Calories, StringFormat='{0} kcal'}"
+                                    FontSize="12"
+                                    TextColor="#1565C0"/>
                         </Frame>
                     </FlexLayout>
 
@@ -53,32 +53,32 @@
                         <Label Grid.Column="0"
                                Text="⏱️"
                                FontSize="16"/>
-                        <Label Grid.Column="1"
-                               Text="{Binding Recipe.PrepTime, StringFormat='准备 {0}分钟'}"
-                               FontSize="14"
-                               TextColor="Gray"
-                               Margin="4,0"/>
+                         <Label Grid.Column="1"
+                                Text="{Binding Recipe.PrepTime, StringFormat='Prep {0} min'}"
+                                FontSize="14"
+                                TextColor="Gray"
+                                Margin="4,0"/>
 
                         <Label Grid.Column="2"
                                Text="🔥"
                                FontSize="16"
                                Margin="12,0,0,0"/>
-                        <Label Grid.Column="3"
-                               Text="{Binding Recipe.CookTime, StringFormat='烹饪 {0}分钟'}"
-                               FontSize="14"
-                               TextColor="Gray"
-                               Margin="4,0"/>
+                         <Label Grid.Column="3"
+                                Text="{Binding Recipe.CookTime, StringFormat='Cook {0} min'}"
+                                FontSize="14"
+                                TextColor="Gray"
+                                Margin="4,0"/>
                     </Grid>
 
-                    <Label Grid.Row="3"
-                           Text="👤 份量"
-                           FontSize="14"
-                           Margin="0,10,0,0"/>
+                     <Label Grid.Row="3"
+                            Text="Servings"
+                            FontSize="14"
+                            Margin="0,10,0,0"/>
 
-                    <Label Grid.Row="4"
-                           Text="{Binding Recipe.Servings, StringFormat='{0}人'}"
-                           FontSize="16"
-                           Margin="0,0,0,15"/>
+                     <Label Grid.Row="4"
+                            Text="{Binding Recipe.Servings, StringFormat='{0} servings'}"
+                            FontSize="16"
+                            Margin="0,0,0,15"/>
 
                     <Label Grid.Row="5"
                            Text="{Binding Recipe.Description}"
@@ -89,11 +89,11 @@
 
                     <BoxView Grid.Row="6" Color="LightGray" HeightRequest="1" Margin="0,10"/>
 
-                    <Label Grid.Row="7"
-                           Text="🛒 食材"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           Margin="0,10,0,10"/>
+                     <Label Grid.Row="7"
+                            Text="Ingredients"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Margin="0,10,0,10"/>
 
                     <CollectionView Grid.Row="8"
                                     ItemsSource="{Binding Recipe.Ingredients}">
@@ -117,11 +117,11 @@
                 </Grid>
 
                 <Grid Padding="20" RowDefinitions="Auto,Auto">
-                    <Label Grid.Row="0"
-                           Text="📝 制作步骤"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           Margin="0,0,0,10"/>
+                     <Label Grid.Row="0"
+                            Text="Instructions"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Margin="0,0,0,10"/>
 
                     <CollectionView Grid.Row="1"
                                     ItemsSource="{Binding Recipe.Instructions}">
@@ -155,28 +155,28 @@
                     </CollectionView>
                 </Grid>
 
-                 <Button Text="📷 拍照更新"
-                         Margin="20,10"
-                         BackgroundColor="#512BD4"
-                         TextColor="White"
-                         CornerRadius="25"
-                         Clicked="OnTakePhotoClicked"/>
+                  <Button Text="Take Photo"
+                          Margin="20,10"
+                          BackgroundColor="#512BD4"
+                          TextColor="White"
+                          CornerRadius="25"
+                          Clicked="OnTakePhotoClicked"/>
 
                  <Grid Margin="20,0,20,0" ColumnDefinitions="*,*">
-                     <Button Grid.Column="0"
-                             Text="✏️ 编辑"
-                             BackgroundColor="#FF9800"
-                             TextColor="White"
-                             CornerRadius="20"
-                             Margin="0,0,5,0"
-                             Clicked="OnEditClicked"/>
-                     <Button Grid.Column="1"
-                             Text="🗑️ 删除"
-                             BackgroundColor="#F44336"
-                             TextColor="White"
-                             CornerRadius="20"
-                             Margin="5,0,0,0"
-                             Clicked="OnDeleteClicked"/>
+                      <Button Grid.Column="0"
+                              Text="Edit"
+                              BackgroundColor="#FF9800"
+                              TextColor="White"
+                              CornerRadius="20"
+                              Margin="0,0,5,0"
+                              Clicked="OnEditClicked"/>
+                      <Button Grid.Column="1"
+                              Text="Delete"
+                              BackgroundColor="#F44336"
+                              TextColor="White"
+                              CornerRadius="20"
+                              Margin="5,0,0,0"
+                              Clicked="OnDeleteClicked"/>
                  </Grid>
             </VerticalStackLayout>
         </ScrollView>

@@ -60,7 +60,7 @@ public class AddRecipeViewModel : ObservableObject
         set => SetProperty(ref _cookTime, value);
     }
 
-    private string _category = "早餐";
+    private string _category = "Breakfast";
     public string Category
     {
         get => _category;
@@ -74,7 +74,7 @@ public class AddRecipeViewModel : ObservableObject
         set => SetProperty(ref _servings, value);
     }
 
-    private string _difficulty = "简单";
+    private string _difficulty = "Easy";
     public string Difficulty
     {
         get => _difficulty;
@@ -88,8 +88,8 @@ public class AddRecipeViewModel : ObservableObject
         set => SetProperty(ref _calories, value);
     }
 
-    public List<string> Categories { get; } = new List<string> { "早餐", "午餐", "晚餐", "甜点", "饮品" };
-    public List<string> Difficulties { get; } = new List<string> { "简单", "中等", "困难" };
+    public List<string> Categories { get; } = new List<string> { "Breakfast", "Lunch", "Dinner", "Dessert", "Drink" };
+    public List<string> Difficulties { get; } = new List<string> { "Easy", "Medium", "Hard" };
 
     public AddRecipeViewModel(IDataService dataService, IHardwareService hardwareService, INavigationService navigationService)
     {
@@ -102,19 +102,19 @@ public class AddRecipeViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(Title))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入食谱名称", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter recipe name", "OK");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(Ingredients))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入食材", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter ingredients", "OK");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(Instructions))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入制作步骤", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter instructions", "OK");
             return;
         }
 
@@ -135,7 +135,7 @@ public class AddRecipeViewModel : ObservableObject
         };
 
         await _dataService.AddRecipeAsync(recipe);
-        await Application.Current!.MainPage!.DisplayAlert("成功", "食谱添加成功！", "确定");
+        await Application.Current!.MainPage!.DisplayAlert("Success", "Recipe added successfully!", "OK");
         await Application.Current!.MainPage!.Navigation.PopAsync();
     }
 

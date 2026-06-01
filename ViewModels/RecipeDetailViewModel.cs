@@ -57,8 +57,8 @@ public class RecipeDetailViewModel : ObservableObject
         else
         {
             IsSpeaking = true;
-            var instructionsText = string.Join("。", Recipe.Instructions);
-            await _hardwareService.SpeakAsync($"{Recipe.Title}的制作步骤。{instructionsText}");
+            var instructionsText = string.Join(". ", Recipe.Instructions);
+            await _hardwareService.SpeakAsync($"Instructions for {Recipe.Title}. {instructionsText}");
             IsSpeaking = false;
         }
     }

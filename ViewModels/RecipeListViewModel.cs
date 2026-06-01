@@ -67,12 +67,12 @@ public class RecipeListViewModel : ObservableObject
 
     public ObservableCollection<Category> Categories { get; } = new()
     {
-        new Category { Name = "全部", Icon = "🍽️" },
-        new Category { Name = "早餐", Icon = "🥞" },
-        new Category { Name = "午餐", Icon = "🍱" },
-        new Category { Name = "晚餐", Icon = "🍝" },
-        new Category { Name = "甜点", Icon = "🍰" },
-        new Category { Name = "饮品", Icon = "🥤" }
+        new Category { Name = "All", Icon = "🍽️" },
+        new Category { Name = "Breakfast", Icon = "🥞" },
+        new Category { Name = "Lunch", Icon = "🍱" },
+        new Category { Name = "Dinner", Icon = "🍝" },
+        new Category { Name = "Dessert", Icon = "🍰" },
+        new Category { Name = "Drink", Icon = "🥤" }
     };
 
     public RecipeListViewModel(IDataService dataService, INavigationService navigationService)
@@ -96,7 +96,7 @@ public class RecipeListViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"加载食谱失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to load recipes: {ex.Message}", "OK");
         }
         finally
         {
@@ -128,7 +128,7 @@ public class RecipeListViewModel : ObservableObject
                 r.Ingredients.Any(i => i.ToLower().Contains(searchLower)));
         }
 
-        if (SelectedCategory != null && SelectedCategory.Name != "全部")
+        if (SelectedCategory != null && SelectedCategory.Name != "All")
         {
             filtered = filtered.Where(r => r.Category == SelectedCategory.Name);
         }
@@ -153,7 +153,7 @@ public class RecipeListViewModel : ObservableObject
                 r.Ingredients.Any(i => i.ToLower().Contains(searchLower)));
         }
 
-        if (SelectedCategory != null && SelectedCategory.Name != "全部")
+        if (SelectedCategory != null && SelectedCategory.Name != "All")
         {
             filtered = filtered.Where(r => r.Category == SelectedCategory.Name);
         }

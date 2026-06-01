@@ -25,6 +25,12 @@ public partial class MainPage : ContentPage
         await _hardwareService.StartAccelerometerAsync(async () => await _viewModel.HandleShakeAsync());
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadRecipesAsync();
+    }
+
     private void OnCategoryTapped(object? sender, TappedEventArgs e)
     {
         if (sender is Frame frame && frame.BindingContext is Category category)

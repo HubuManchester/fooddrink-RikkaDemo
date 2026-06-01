@@ -39,11 +39,11 @@ public class HardwareService : IHardwareService
         }
         catch (FeatureNotSupportedException)
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "此设备不支持加速度计", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Accelerometer not supported on this device", "OK");
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"加速度计启动失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to start accelerometer: {ex.Message}", "OK");
         }
 
         void OnAccelerometerReadingChanged(object? sender, AccelerometerChangedEventArgs e)
@@ -85,7 +85,7 @@ public class HardwareService : IHardwareService
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"加速度计停止失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to stop accelerometer: {ex.Message}", "OK");
         }
     }
 
@@ -99,7 +99,7 @@ public class HardwareService : IHardwareService
         {
             if (!MediaPicker.Default.IsCaptureSupported)
             {
-                await Application.Current!.MainPage!.DisplayAlert("错误", "此设备不支持拍照", "确定");
+                await Application.Current!.MainPage!.DisplayAlert("Error", "Camera not supported on this device", "OK");
                 return null;
             }
 
@@ -122,12 +122,12 @@ public class HardwareService : IHardwareService
         }
         catch (PermissionException)
         {
-            await Application.Current!.MainPage!.DisplayAlert("权限错误", "请授予相机权限", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Permission Error", "Please grant camera permission", "OK");
             return null;
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"拍照失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to take photo: {ex.Message}", "OK");
             return null;
         }
     }
@@ -140,7 +140,7 @@ public class HardwareService : IHardwareService
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"语音播放失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to speak: {ex.Message}", "OK");
         }
     }
 
@@ -151,7 +151,7 @@ public class HardwareService : IHardwareService
         }
         catch (Exception ex)
         {
-            await Application.Current!.MainPage!.DisplayAlert("错误", $"停止语音失败: {ex.Message}", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Error", $"Failed to stop speaking: {ex.Message}", "OK");
         }
     }
 }

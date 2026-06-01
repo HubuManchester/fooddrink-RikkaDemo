@@ -83,8 +83,8 @@ public class EditRecipeViewModel : ObservableObject
         set { _recipe.Calories = value; OnPropertyChanged(); }
     }
 
-    public List<string> Categories { get; } = new List<string> { "早餐", "午餐", "晚餐", "甜点", "饮品" };
-    public List<string> Difficulties { get; } = new List<string> { "简单", "中等", "困难" };
+    public List<string> Categories { get; } = new List<string> { "Breakfast", "Lunch", "Dinner", "Dessert", "Drink" };
+    public List<string> Difficulties { get; } = new List<string> { "Easy", "Medium", "Hard" };
 
     public EditRecipeViewModel(IDataService dataService, IHardwareService hardwareService, Recipe recipe)
     {
@@ -97,24 +97,24 @@ public class EditRecipeViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(Title))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入食谱名称", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter recipe name", "OK");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(Ingredients))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入食材", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter ingredients", "OK");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(Instructions))
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "请输入制作步骤", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "Please enter instructions", "OK");
             return;
         }
 
         await _dataService.UpdateRecipeAsync(_recipe);
-        await Application.Current!.MainPage!.DisplayAlert("成功", "食谱更新成功！", "确定");
+        await Application.Current!.MainPage!.DisplayAlert("Success", "Recipe updated successfully!", "OK");
         await Application.Current!.MainPage!.Navigation.PopAsync();
     }
 
@@ -143,11 +143,11 @@ public class EditRecipeViewModel : ObservableObject
         {
             ImagePath = defaultImages[_recipe.Id];
             await _dataService.UpdateRecipeAsync(_recipe);
-            await Application.Current!.MainPage!.DisplayAlert("成功", "已恢复默认图片", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Success", "Default image restored", "OK");
         }
         else
         {
-            await Application.Current!.MainPage!.DisplayAlert("提示", "此食谱没有默认图片", "确定");
+            await Application.Current!.MainPage!.DisplayAlert("Notice", "No default image available", "OK");
         }
     }
 }
